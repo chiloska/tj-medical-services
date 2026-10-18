@@ -1,0 +1,15 @@
+# TJ Medical Services
+
+> Fictional bilingual medical clinic in Tijuana, Mexico, with an office in San Ysidro, San Diego. Demo knowledge base for an AI receptionist.
+
+- [Clinic fact sheet (everything on one page)](https://tj-medical-services.vercel.app/reference)
+- [Ficha de la clínica (español)](https://tj-medical-services.vercel.app/es/reference)
+- [Home](https://tj-medical-services.vercel.app/)
+- [Services](https://tj-medical-services.vercel.app/services)
+- [Prices](https://tj-medical-services.vercel.app/prices)
+- [Getting here](https://tj-medical-services.vercel.app/travel)
+- [Our team](https://tj-medical-services.vercel.app/team)
+- [FAQ](https://tj-medical-services.vercel.app/faq)
+- [Contact](https://tj-medical-services.vercel.app/contact)
+- [Patient guide](https://tj-medical-services.vercel.app/patient-guide)
+- [Payments & policies](https://tj-medical-services.vercel.app/payments)
