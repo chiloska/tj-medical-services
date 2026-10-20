@@ -4,7 +4,17 @@ Code: `api/webhooks/calcom.ts`, `api/retell/whatsapp.ts`, shared logic in `lib/n
 
 ## 1. Twilio templates
 
-In Twilio → Content Template Builder, create these 4 templates, each in English and Spanish, with category **Utility**, and submit them for WhatsApp approval. The text must match `lib/notifications/templates.ts` exactly: the code uses that copy for dry-run logs and the Sandbox fallback.
+Create these 4 templates, each in English and Spanish (`_en` / `_es` name suffix), with category **Utility**, and submit them for WhatsApp approval. The text must match `lib/notifications/templates.ts` exactly: the code uses that copy for dry-run logs and the Sandbox fallback.
+
+The script does all 8 from that file, using `TWILIO_ACCOUNT_SID` / `TWILIO_AUTH_TOKEN` from `.env.local`:
+
+```bash
+npm run wa:templates               # preview the text and sample values; calls nothing
+npm run wa:templates -- --apply    # create missing templates, submit them, print the WA_TPL_* lines
+npm run wa:templates -- --status   # re-check approval (usually minutes to 48 h)
+```
+
+Re-running is safe: existing templates (matched by name) are reused, not duplicated. A submitted template can't be edited; to change the text, delete it in Twilio → Content Template Builder and run `--apply` again. Doing it by hand in the Console also works.
 
 | Template | Variables |
 |---|---|

@@ -7,7 +7,8 @@
   },
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "wa:templates": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/create-whatsapp-templates.mjs"
   },
   "dependencies": {
     "twilio": "^6.2.0"

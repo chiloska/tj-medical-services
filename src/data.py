@@ -3,12 +3,12 @@
 
 CLINIC = {
     "name": "TJ Medical Services",
-    "phone_us": "+1 (619) 555-0148",
-    "phone_us_tel": "+16195550148",
+    "phone_us": "+1 (619) 349-9659",
+    "phone_us_tel": "+16193499659",
     "phone_mx": "+52 664 555 0148",
     "phone_mx_tel": "+526645550148",
-    "whatsapp": "+1 (619) 555-0149",
-    "whatsapp_link": "https://wa.me/16195550149",
+    "whatsapp": "+1 (619) 349-9659",
+    "whatsapp_link": "https://wa.me/16193499659",
     "email": "care@tjmedicalservices.com",
     "tj_address": "Paseo de los Héroes 9000, Torre TJMS, Floor 4, Zona Río, 22010 Tijuana, B.C., Mexico",
     "sd_address": "480 Frontera Way, Suite 210, San Ysidro, CA 92173, USA",

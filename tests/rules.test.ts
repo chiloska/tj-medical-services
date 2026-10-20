@@ -85,7 +85,7 @@ describe('displayName', () => {
 describe('renderBody', () => {
   it('fills the template variables', () => {
     expect(renderBody('cancel', 'en', { '1': 'Ana', '2': 'dental evaluation', '3': 'Fri, Oct 23, 10:00 AM' })).toBe(
-      'Hi Ana, your dental evaluation with TJ Medical Services on Fri, Oct 23, 10:00 AM has been cancelled. To book a new time, reply here or call +1 (619) 555-0148.',
+      'Hi Ana, your dental evaluation with TJ Medical Services on Fri, Oct 23, 10:00 AM has been cancelled. To book a new time, reply here or call +1 (619) 349-9659.',
     );
   });
 });
