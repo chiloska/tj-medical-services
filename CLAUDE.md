@@ -20,6 +20,7 @@ Deploy is Vercel serving `public/` as-is (`vercel.json`: empty build command, `c
 
 ## Claude Code tooling (`.claude/`, `.mcp.json`)
 
+- **aim-kit** (plugin `aim-kit@aim`, installed by `/aim-kit:install`): working agreement in `docs/agile.md`, rules in `.claude/rules/aim-kit.md`, guard in `.githooks/pre-push`. See "aim-kit overlaps" below.
 - **Hooks** (`.claude/settings.json`, scripts in `.claude/hooks/`): editing a `src/*.py` file auto-runs the build; Edit/Write to generated files (`public/**/*.html`, `sitemap.xml`, `robots.txt`, `llms.txt`) is blocked — `styles.css`, `site.js`, `favicon.svg` stay editable; session start prints the current sprint's open stories.
 - **MCP servers**: `playwright` (browser checks against `src/serve.py`), `vercel` (deploy/preview status; OAuth on first use). GitHub is accessed with the `gh` CLI, not an MCP.
 
@@ -50,10 +51,36 @@ Despite the "single source of truth" comment, a lot of factual copy is hardcoded
 
 GitHub Issues on `chiloska/tj-medical-services` (public — no real patient data in issues) is the backlog; one-week sprints are milestones named `Sprint N`.
 
-- Labels: type `story` / `bug` / `chore`; `size:S|M|L` = 1/2/3 points; `priority:high|medium|low`; `in-progress` while being worked.
-- Branches `story/<n>-<slug>` off `main`; PRs say `Closes #<n>`; Vercel builds a preview per PR.
+- Labels (aim-kit set): `type:story|bug|chore|spike`; `size:1|2|3|5` = points; `priority:high|medium|low`; plus this repo's own `in-progress` while being worked. Legacy `story`/`bug`/`chore` and `size:S|M|L` (1/2/3) never existed on GitHub; the skills still count them if they appear.
+- Every issue is on the portfolio [Project 1](https://github.com/users/chiloska/projects/1) with `Project` = `tj-medical-services`; `/aim-kit:board-sync` adds missing issues and sets Stage and Points.
+- Branches `story/<n>-<slug>` off `main`; PRs say `Closes #<n>`; Vercel builds a preview per PR. Kit work (installs, upgrades) uses `chore/<ID>-<slug>`.
 - Skills, in cycle order: `/story` (write a story) → `/sprint-plan` → `/start-story` → `/done` (Definition of Done check + PR) → `/standup` (read-only status) → `/retro` (close sprint, notes in `docs/retros/`).
+
+### aim-kit overlaps (which skill to use)
+
+The aim-kit plugin (`enabledPlugins` in `.claude/settings.json`) adds namespaced `/aim-kit:*` skills, hooks and agents. The repo's own skills stay the default here because `/done` checks this site's Definition of Done (rebuild, EN/ES parity, fact consistency, browser check). The override is recorded in `docs/agile.md` → "Project-specific".
+
+| Need | Use | Not |
+|---|---|---|
+| Write a new issue | `/story` | `/aim-kit:refine` (only to rewrite an existing issue to the kit's story format) |
+| Plan a sprint | `/sprint-plan` (one-week `Sprint N`, then `/aim-kit:board-sync`) | `/aim-kit:sprint-plan` (opens a "plan: approve scope" issue, `Sprint NN`) |
+| Work on an issue | `/start-story` then `/done` | `/aim-kit:story` — it *delivers* a story (branch + agents + PR), the opposite meaning of this repo's `/story` |
+| Status | `/standup` | `/aim-kit:standup` (fine too; it reads Project 1 Stage fields) |
+| Close a sprint | `/retro` (notes in `docs/retros/`) | `/aim-kit:sprint-review` |
+| Fix the board | `/aim-kit:board-sync` | — (kit only) |
+| Save / hand off | `/aim-kit:checkpoint`, `/aim-kit:new-session` | — (kit only) |
+| Second code review | `/aim-kit:review-gpt` | — (kit only, optional for `api/` and `lib/` changes) |
+
+Hooks: the repo hooks above keep running. The kit's plugin hooks (issue comments "Started / Handed back / Blocked", DoD stop check) only act on branches named `feat|fix|chore|spike/<ID>-<slug>`, so they stay silent on `story/<n>-…` branches. The kit's guard also adds the `.githooks/pre-push` hook (refuses pushes to `main`) and deny rules in `.claude/settings.json` (no push to main, no `gh pr merge`, no reading `.env`); agents can't edit that file or `.githooks/`.
 
 ## Before going live
 
 Replace the placeholder phone numbers, email and `CLINIC["url"]` (used in canonical/hreflang links, sitemap, robots.txt and llms.txt) in `src/data.py`, then rebuild.
+
+<!-- aim-kit:start -->
+## aim-kit
+This project runs on the aim-kit working agreement: [docs/agile.md](docs/agile.md). Non-negotiable rules (also loaded
+by cloud threads): [.claude/rules/aim-kit.md](.claude/rules/aim-kit.md). In short: no secrets in the repo, never
+push to `main`/`production` or merge a PR, every change goes through a story branch and a PR the PO merges, ask the
+PO before deploys, credit spend, container stop/rm and sudo. Story files live in `tasks/stories/<ID>.md`.
+<!-- aim-kit:end -->

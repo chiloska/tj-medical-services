@@ -15,14 +15,14 @@ gh pr list --state merged --search "milestone:\"<sprint>\"" --json number,title,
 git log --since="<sprint start>" --pretty="%h %s" main
 ```
 
-Work out committed and delivered points (S=1, M=2, L=3), which issues are unfinished, and whether the sprint goal in the milestone description was met. Look back at earlier `docs/retros/*.md` files to see how velocity has trended.
+Work out committed and delivered points (from `size:1|2|3|5`; legacy S=1, M=2, L=3), which issues are unfinished, and whether the sprint goal in the milestone description was met. Look back at earlier `docs/retros/*.md` files to see how velocity has trended.
 
 ## 2. Retrospective
 
 Ask the user for their take, or draft it from the evidence and let them edit:
 - **Went well**
 - **Didn't go well**: missed stories, stories that grew mid-sprint, hook or build friction
-- **Action items**: at most 3 concrete changes. Each one becomes a `chore` issue through `/story`, or an edit to CLAUDE.md or a skill.
+- **Action items**: at most 3 concrete changes. Each one becomes a `type:chore` issue through `/story`, or an edit to CLAUDE.md or a skill.
 
 ## 3. Record and close (confirm with the user first)
 

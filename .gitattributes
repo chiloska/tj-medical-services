@@ -1,0 +1,3 @@
+# aim-kit: LF endings for hooks and shell scripts
+*.sh text eol=lf
+.githooks/* text eol=lf

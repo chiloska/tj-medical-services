@@ -6,7 +6,7 @@ argument-hint: "[capacity in points, default 8] [sprint goal]"
 
 # Sprint planning
 
-Sprints are GitHub milestones named `Sprint N`, one week long. Points: `size:S`=1, `size:M`=2, `size:L`=3. Default capacity is **8 points** unless the user gives one.
+Sprints are GitHub milestones named `Sprint N`, one week long. Points come from the aim-kit labels `size:1|2|3|5` (legacy `size:S|M|L` count as 1/2/3). Default capacity is **8 points** unless the user gives one.
 
 ## 1. Check state
 
@@ -22,7 +22,7 @@ gh issue list --state open --limit 200 --json number,title,labels,milestone
 
 Sort the backlog by priority (high, medium, low), then bugs before stories, then smaller first. Fill up to capacity. Flag:
 - unsized issues: estimate a size and say so
-- `size:L` issues: suggest splitting with `/story` before committing to them
+- `size:5` issues: suggest splitting with `/story` before committing to them
 - dependencies between issues (e.g. a price change that must land before the Retell prompt update)
 
 Present: sprint name (next N), dates (today to today+7), a one-sentence sprint goal, the chosen issues with points and total, and what stays in the backlog. Wait for the user to confirm or adjust.
@@ -32,7 +32,7 @@ Present: sprint name (next N), dates (today to today+7), a one-sentence sprint g
 ```bash
 gh api repos/{owner}/{repo}/milestones -f title="Sprint N" -f due_on="YYYY-MM-DDT23:59:59Z" -f description="Goal: ..."
 gh issue edit <n> --milestone "Sprint N"            # for each chosen issue
-gh issue edit <n> --add-label size:M                # if you estimated a missing size
+gh issue edit <n> --add-label size:2                # if you estimated a missing size
 ```
 
-Report the milestone URL and the committed points. The SessionStart hook shows this sprint's progress in each new session.
+Then run `/aim-kit:board-sync` so Project 1 shows the sprint's items with Stage `Sprint`, Points and the Sprint field. Report the milestone URL and the committed points. The SessionStart hook shows this sprint's progress in each new session.
