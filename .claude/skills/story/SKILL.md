@@ -37,26 +37,22 @@ Assumptions: ...
 Drop the conditional criteria lines that don't apply (and the `<-` hints).
 
 Pick labels:
-- type: `story` (new value), `bug` (something wrong), or `chore` (tooling/maintenance)
-- size: `size:S` (≤ half a day, 1 pt), `size:M` (about a day, 2 pts), `size:L` (3 pts — suggest splitting into smaller stories)
+- type: `type:story` (new value), `type:bug` (something wrong), `type:chore` (tooling/maintenance) or `type:spike` (time-boxed investigation)
+- size: `size:1` (≤ half a day), `size:2` (about a day), `size:3` (two days), `size:5` (too big — suggest splitting into smaller stories)
 - priority: `priority:high`, `priority:medium` or `priority:low`
 
 ## 3. Create it
 
 Show the user the draft (title, labels, body). Create it once they confirm, or straight away if they already asked you to create it.
 
-If labels are missing (`gh label list`), create them first:
+The `type:*`, `size:*` and `priority:*` labels come from aim-kit (`/aim-kit:install` creates them; don't recreate or `--force` them). Only `in-progress` is this repo's own; create it if `gh label list` doesn't show it:
 
 ```bash
-gh label create story --color 1d76db --description "User story" --force
-gh label create chore --color c5def5 --description "Tooling / maintenance" --force
-gh label create in-progress --color fbca04 --description "Being worked on" --force
-for s in S M L; do gh label create "size:$s" --color bfdadc --force; done
-for p in high medium low; do gh label create "priority:$p" --color e99695 --force; done
+gh label create in-progress --color fbca04 --description "Being worked on"
 ```
 
 ```bash
-gh issue create --title "<title>" --label story,size:M,priority:medium --body-file <tmpfile>
+gh issue create --title "<title>" --label type:story,size:2,priority:medium --body-file <tmpfile>
 ```
 
-Write the body to a temp file in your scratchpad rather than inlining it, so quoting doesn't break. Do not assign a milestone here; `/sprint-plan` does that. Report the issue URL.
+Write the body to a temp file in your scratchpad rather than inlining it, so quoting doesn't break. Do not assign a milestone here; `/sprint-plan` does that. Report the issue URL, then run `/aim-kit:board-sync` so the issue lands on Project 1 (`Project` = tj-medical-services, Stage, Points).

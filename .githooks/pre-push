@@ -1,0 +1,14 @@
+#!/bin/sh
+# aim-kit guard (AM-105): GitHub Free cannot protect main on private repos, so pushes to main/master/production
+# are refused here. The PO's own override is documented in docs/agile.md (not printed here on purpose).
+# Enable once per clone:  git config core.hooksPath .githooks   (/aim-kit:install does it)
+while read -r local_ref local_sha remote_ref remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main|refs/heads/master|refs/heads/production)
+      if [ "${ALLOW_MAIN_PUSH:-}" != "1" ]; then
+        echo "pre-push: pushes to ${remote_ref#refs/heads/} are not allowed. Push a story branch and open a PR." >&2
+        exit 1
+      fi ;;
+  esac
+done
+exit 0
